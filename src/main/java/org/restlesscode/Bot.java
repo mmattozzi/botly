@@ -10,6 +10,7 @@ public interface Bot {
     public void setDisplayName(String name);
     public String getDisplayName();
     
-    public void addMessageListener(MessageListener messageListener);
+    public MessageHandlerChain getMessageHandlerChain();
+    public Thread getRunner() throws IllegalStateException;
 
 }

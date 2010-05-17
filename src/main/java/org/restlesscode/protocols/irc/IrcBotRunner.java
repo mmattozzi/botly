@@ -1,4 +1,4 @@
-package org.restlesscode.irc;
+package org.restlesscode.protocols.irc;
 
 import org.jibble.pircbot.IrcException;
 import org.jibble.pircbot.NickAlreadyInUseException;

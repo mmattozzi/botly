@@ -1,5 +1,7 @@
 package org.restlesscode;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 /**
  * Created: Apr 29, 2010
  *
@@ -8,11 +10,14 @@ package org.restlesscode;
 public interface MessageListener {
 
     /**
-     *
-     * @param sender - Sender of message
-     * @param message - Message overheard
+     * @param messageContext
      * @return true to continue handling message, false to finish off message
      */
-    public boolean handleMessage(String sender, String message);
+    public boolean handleMessage(MessageContext messageContext);
 
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate);
+    
+    public void doFirstInit();
+    
+    public void doInit();
 }
