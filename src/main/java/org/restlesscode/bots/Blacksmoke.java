@@ -17,6 +17,7 @@ public class Blacksmoke extends IrcBot {
         setIrcChannel("milhouse");
         setIrcServer("irc.freenode.net");
         getMessageHandlerChain().addMessageListener(new LostQuoter());
+        getMessageHandlerChain().addMessageListener(new ChannelQuoter());
     }
 
 }
