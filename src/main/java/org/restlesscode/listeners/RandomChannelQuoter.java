@@ -1,11 +1,21 @@
 package org.restlesscode.listeners;
 
-/**
- * Created by IntelliJ IDEA.
- * User: mmattozzi
- * Date: May 27, 2010
- * Time: 11:10:17 PM
- * To change this template use File | Settings | File Templates.
- */
-public class RandomChannelQuoter {
+import org.restlesscode.MessageContext;
+import org.restlesscode.MessageListenerAdapter;
+
+public class RandomChannelQuoter extends MessageListenerAdapter {
+
+    @Override
+    public boolean handleMessage(MessageContext messageContext) {
+
+        if (messageContext.wasDirectlyAddressed()) {
+            String response = simpleJdbcTemplate.queryForObject("select message from messages m join (select floor(max(id)*rand()) " +
+                            "as id from messages) as x on m.id >= x.id limit 1", String.class);
+
+            messageContext.setResponse(response);
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

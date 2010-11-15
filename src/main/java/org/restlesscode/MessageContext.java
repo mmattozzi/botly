@@ -14,10 +14,12 @@ public class MessageContext {
     protected String response;
     protected String sender;
     protected Map<String, Object> properties = new HashMap<String, Object>();
+    protected String botName;
 
-    public MessageContext(String sender, String message) {
+    public MessageContext(String sender, String message, String botName) {
         this.sender = sender;
         this.message = message;
+        this.botName = botName;
     }
 
     public String getMessage() {
@@ -42,5 +44,13 @@ public class MessageContext {
 
     public void setProperties(Map<String, Object> properties) {
         this.properties = properties;
+    }
+
+    public String getBotName() {
+        return botName;
+    }
+
+    public boolean wasDirectlyAddressed() {
+        return message.contains(botName);
     }
 }

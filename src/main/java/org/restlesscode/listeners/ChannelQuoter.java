@@ -2,6 +2,7 @@ package org.restlesscode.listeners;
 
 import org.restlesscode.MessageContext;
 import org.restlesscode.MessageListener;
+import org.restlesscode.MessageListenerAdapter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -14,9 +15,7 @@ import java.util.regex.Pattern;
  *
  * @author mmattozzi
  */
-public class ChannelQuoter implements MessageListener {
-
-    protected SimpleJdbcTemplate simpleJdbcTemplate;
+public class ChannelQuoter extends MessageListenerAdapter {
 
     protected static Pattern userQuoteRequest = Pattern.compile("!do (.*)");
     protected static Pattern messageRequest = Pattern.compile("!msg (.*)");
@@ -54,11 +53,6 @@ public class ChannelQuoter implements MessageListener {
         return true;
     }
 
-    @Override
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        simpleJdbcTemplate = new SimpleJdbcTemplate(jdbcTemplate);
-    }
-
     public String getQuote(String username) {
         if (username == null) return null;
 
@@ -77,13 +71,4 @@ public class ChannelQuoter implements MessageListener {
         return quote;
     }
 
-    @Override
-    public void doFirstInit() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void doInit() {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

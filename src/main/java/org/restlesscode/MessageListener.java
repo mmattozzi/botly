@@ -20,4 +20,12 @@ public interface MessageListener {
     public void doFirstInit();
     
     public void doInit();
+
+    public void setProbability(float probability);
+
+    public float getProbability();
+
+    public boolean getActive();
+    
+    public void setActive(boolean active);
 }

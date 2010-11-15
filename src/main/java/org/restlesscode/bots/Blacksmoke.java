@@ -1,5 +1,6 @@
 package org.restlesscode.bots;
 
+import org.restlesscode.listeners.ChannelLogger;
 import org.restlesscode.listeners.ChannelQuoter;
 import org.restlesscode.listeners.LostQuoter;
 import org.restlesscode.protocols.irc.IrcBot;
@@ -16,8 +17,10 @@ public class Blacksmoke extends IrcBot {
         setDisplayName("blacksmoke");
         setIrcChannel("milhouse");
         setIrcServer("irc.freenode.net");
+        getMessageHandlerChain().addMessageListener(new ChannelLogger());
         getMessageHandlerChain().addMessageListener(new LostQuoter());
         getMessageHandlerChain().addMessageListener(new ChannelQuoter());
+
     }
 
 }

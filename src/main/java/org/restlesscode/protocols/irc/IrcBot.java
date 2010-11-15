@@ -58,7 +58,7 @@ public class IrcBot extends PircBot implements Bot {
 	@Override
 	public void onMessage(String channel, String sender,
             String login, String hostname, String message) {
-        String response = messageHandlerChain.handleMessage(sender, message);
+        String response = messageHandlerChain.handleMessage(sender, message, getDisplayName());
         if (response != null) {
             sendMessage(channel, response);
         }

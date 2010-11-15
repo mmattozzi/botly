@@ -2,10 +2,7 @@ package org.restlesscode;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created: May 16, 2010
@@ -16,8 +13,8 @@ public class MessageHandlerChain {
 
     protected List<MessageListener> messageListeners =
             new ArrayList<MessageListener>();
-    protected Map<MessageListener, Boolean> listenerActive =
-            new HashMap<MessageListener, Boolean>();
+
+    protected Random random = new Random();
 
     /**
      *
@@ -25,13 +22,18 @@ public class MessageHandlerChain {
      * @param message
      * @return Response message
      */
-    public String handleMessage(String sender, String message) {
-        MessageContext messageContext = new MessageContext(sender, message);
+    public String handleMessage(String sender, String message, String botName) {
+        MessageContext messageContext = new MessageContext(sender, message, botName);
 
         for (MessageListener messageListener : messageListeners) {
-            if (listenerActive.get(messageListener)) {
-                if (! messageListener.handleMessage(messageContext)) {
-                    break;
+            if (messageListener.getActive() && random.nextFloat() < messageListener.getProbability()) {
+                try {
+                    if (! messageListener.handleMessage(messageContext)) {
+                        System.out.println("Message handled by " + messageListener.getClass().getSimpleName());
+                        break;
+                    }
+                } catch (Throwable t) {
+                    t.printStackTrace();
                 }
             }
         }
@@ -41,7 +43,11 @@ public class MessageHandlerChain {
 
     public void addMessageListener(MessageListener messageListener) {
         messageListeners.add(messageListener);
-        listenerActive.put(messageListener, true);
+    }
+
+    public void addMessageListener(MessageListener messageListener, float probability) {
+        messageListener.setProbability(probability);
+        messageListeners.add(messageListener);
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -55,4 +61,9 @@ public class MessageHandlerChain {
             messageListener.doInit();
         }
     }
+
+    public List<MessageListener> getMessageListeners() {
+        return messageListeners;
+    }
+
 }

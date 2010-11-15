@@ -3,7 +3,7 @@
        xsi:schemaLocation="
            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean name="/" id="adminMain" class="org.restlesscode.admin.AdminServlet" init-method="init">
+    <bean name="/" id="adminServlet" class="org.restlesscode.admin.AdminServlet" init-method="init">
     </bean>
 
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
